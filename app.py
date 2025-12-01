@@ -11,7 +11,7 @@ st.title("Will This Product Be Profitable?")
 st.write("Predict if a product/order will make money using your sales data")
 
 # --------------------- Load Model ---------------------
-MODEL_PATH = "profit_model.pkl"
+MODEL_PATH = "models/profit_model.pkl"
 
 if not os.path.exists(MODEL_PATH):
     st.error("Model not found! Run the training script first.")
@@ -42,7 +42,7 @@ sample = pd.DataFrame([{
     "Units Sold": units_sold,
     "Revenue": revenue,
     "Cost of Goods Sold": cogs,
-    "Category": len(category),           # trick: use length as numeric proxy
+    "category_length": len(category),           # Fixed: use correct column name
     "is_coke": 1 if "coca" in company.lower() else 0
 }])
 
@@ -86,5 +86,11 @@ if st.button("Predict Profitability", type="primary"):
     st.dataframe(result_df.style.background_gradient(subset=["Confidence"], cmap="Greens"))
 
     if len(predictions) > 1:
-
         st.bar_chart(result_df["Prediction"].value_counts())
+        
+        # Pie Chart for Prediction Distribution
+        prediction_counts = result_df["Prediction"].value_counts()
+        fig, ax = plt.subplots()
+        ax.pie(prediction_counts.values, labels=prediction_counts.index, autopct='%1.1f%%', startangle=90)
+        ax.set_title("Prediction Distribution (Profitable vs Loss-Making)")
+        st.pyplot(fig)
