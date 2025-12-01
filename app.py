@@ -11,7 +11,7 @@ st.title("Will This Product Be Profitable?")
 st.write("Predict if a product/order will make money using your sales data")
 
 # --------------------- Load Model ---------------------
-MODEL_PATH = "models/profit_model.pkl"
+MODEL_PATH = "profit_model.pkl"
 
 if not os.path.exists(MODEL_PATH):
     st.error("Model not found! Run the training script first.")
@@ -94,3 +94,4 @@ if st.button("Predict Profitability", type="primary"):
         ax.pie(prediction_counts.values, labels=prediction_counts.index, autopct='%1.1f%%', startangle=90)
         ax.set_title("Prediction Distribution (Profitable vs Loss-Making)")
         st.pyplot(fig)
+
