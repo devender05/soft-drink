@@ -11,7 +11,7 @@ st.title("Will This Product Be Profitable?")
 st.write("Predict if a product/order will make money using your sales data")
 
 # --------------------- Load Model ---------------------
-MODEL_PATH = "models/profit_model.pkl"
+MODEL_PATH = "profit_model.pkl"
 
 if not os.path.exists(MODEL_PATH):
     st.error("Model not found! Run the training script first.")
@@ -86,4 +86,5 @@ if st.button("Predict Profitability", type="primary"):
     st.dataframe(result_df.style.background_gradient(subset=["Confidence"], cmap="Greens"))
 
     if len(predictions) > 1:
+
         st.bar_chart(result_df["Prediction"].value_counts())
